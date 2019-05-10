@@ -1,5 +1,5 @@
 // WalkMap.cpp : Defines the entry point for the console application.
-//
+// ç”¨é€’å½’çš„æ€æƒ³å»åœ¨åœ°å›¾ä¸­æœå¯»è·¯å¾„ï¼Œç”¨æ ˆæ¥ä¿å­˜èµ°è¿‡çš„ç‚¹ï¼Œå½“å‰ç‚¹pushæ¥å…¥æ ˆï¼Œè¦é€€å›ä¸Šä¸€ä¸ªç‚¹å°±popï¼Œç„¶åå°è¯•popå‡ºæ¥çš„ç‚¹
 
 #include "stdafx.h"
 #include "LinkedStack.h"
@@ -12,34 +12,12 @@ int AMap[MapLen][MapLen] = {
 	{ 1, 0, 0, 0, -3, 1 },
 	{ 1, 1, 1, 1, 1, 1 } };
 /*
-µØÍ¼Àï£º1¡ª¡ªÕÏ°­£»2¡ª¡ªËÀÂ·£»0¡ª¡ª¿ÕÏĞ
-¹Ì¶¨Æğµã£º<1,1>
-×ß¹ıµÄµã£º-1
-ÖÕµã£ºµØÍ¼ÉÏ±ê-3
+åœ°å›¾é‡Œï¼š1â€”â€”éšœç¢ï¼›2â€”â€”æ­»è·¯ï¼›0â€”â€”ç©ºé—²
+å›ºå®šèµ·ç‚¹ï¼š<1,1>
+èµ°è¿‡çš„ç‚¹ï¼š-1
+ç»ˆç‚¹ï¼šåœ°å›¾ä¸Šæ ‡-3
 */
-void Demo_LinkedStack()
-{
-	Linked_Stack_Node * pHead = CreateLinkedStack();
-	if (pHead != NULL)
-	{
-		if (PushLinkedStack(pHead, 1, 1))
-		{
-			PushLinkedStack(pHead, 2, 3);
-			int x = 0, y = 0;
-			if (PopLinkedStack(pHead, &x, &y))
-			{
-				printf("\nx=%d, y=%d\n", x, y);
-			}
-			if (PopLinkedStack(pHead, &x, &y))
-			{
-				printf("\nx=%d, y=%d\n", x, y);
-			}
-		}
-		DestroyLinkedStack(pHead);
-	}
-}
-
-//´òÓ¡µØÍ¼
+//æ‰“å°åœ°å›¾
 void printMyMap()
 {
 	int x = 0, y = 0;
@@ -74,33 +52,33 @@ void WalkMap(int y, int x, Linked_Stack_Node * pHead)
 	if ((AMap[y][x] == 0)||(AMap[y][x] == -1))
 	{
 		if (AMap[y][x]==0)
-			AMap[y][x] = -1;//±ê¼Çµ±Ç°µãÎªÒÑ×ß
-		PushLinkedStack(pHead, x, y);//ÈëÕ»£¬±íÊ¾¼ÓÈëÂ·¾¶µ±ÖĞ
-		//´Ó4¸ö·½ÏòÖğ²½È¥ÊÔÌ½ÏÂÒ»²½
+			AMap[y][x] = -1;//æ ‡è®°å½“å‰ç‚¹ä¸ºå·²èµ°
+		PushLinkedStack(pHead, x, y);//å…¥æ ˆï¼Œè¡¨ç¤ºåŠ å…¥è·¯å¾„å½“ä¸­
+		//ä»4ä¸ªæ–¹å‘é€æ­¥å»è¯•æ¢ä¸‹ä¸€æ­¥
 		if ((AMap[y - 1][x] == 0)||(AMap[y - 1][x] == -3))
 		{
-			//ÉÏ
+			//ä¸Š
 			WalkMap(y - 1, x, pHead);
 		}
 		else if ((AMap[y][x+1] == 0)||(AMap[y][x + 1] == -3))
 		{
-			//ÓÒ
+			//å³
 			WalkMap(y, x + 1, pHead);
 		}
 		else if ((AMap[y + 1][x] == 0)||(AMap[y + 1][x] == -3))
 		{
-			//ÏÂ
+			//ä¸‹
 			WalkMap(y + 1, x, pHead);
 		}
 		else if ((AMap[y][x - 1] == 0)||(AMap[y][x - 1] == -3))
 		{
-			//×ó
+			//å·¦
 			WalkMap(y, x - 1, pHead);
 		}
 		else
 		{
-			//ËÄ¸ö·½Ïò¶¼×ß²»ÏÂÈ¥
-			AMap[y][x] = 2;//±ê¼Çµ±Ç°µãÎªËÀÂ·
+			//å››ä¸ªæ–¹å‘éƒ½èµ°ä¸ä¸‹å»
+			AMap[y][x] = 2;//æ ‡è®°å½“å‰ç‚¹ä¸ºæ­»è·¯
 			int ly, lx;
 			PopLinkedStack(pHead, &ly, &lx);
 			PopLinkedStack(pHead, &ly, &lx);
@@ -109,11 +87,11 @@ void WalkMap(int y, int x, Linked_Stack_Node * pHead)
 	}
 	if (AMap[y][x] == -3)
 	{
-		printf("\nµ½´ïÖÕµã\n");
+		printf("\nåˆ°è¾¾ç»ˆç‚¹\n");
 	}
 	if ((x == 1) && (y == 1) && (AMap[y][x] == 2))
 	{
-		printf("\nÎŞ·¨ÕÒµ½Â·¾¶\n");
+		printf("\næ— æ³•æ‰¾åˆ°è·¯å¾„\n");
 	}
 }
 
